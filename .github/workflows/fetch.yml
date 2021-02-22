@@ -25,9 +25,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Fetch data from 4 days ago
         run: |
-          python --version
           export DATE=`date --date="4 days ago" +%Y-%m-%d`
-          python src/rainfall.py -s src/stations.txt -d $DATE
+          python3 src/rainfall.py -s src/stations.txt -d $DATE
 
       # Runs a set of commands using the runners shell
       - name: Commit new data
