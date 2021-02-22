@@ -1,0 +1,79 @@
+[
+    {
+        "location": "Exeter",
+        "station_id": "45184",
+        "grid_ref": "SX959931",
+        "lat": 50.73,
+        "lon": -3.48
+    },
+    {
+        "location": "Sourton",
+        "station_id": "47156",
+        "grid_ref": "SX548909",
+        "lat": 50.70,
+        "lon": -4.06
+    },
+    {
+        "location": "Goonhilly",
+        "station_id": "48171",
+        "grid_ref": "SW703199",
+        "lat": 50.04,
+        "lon": -5.21
+    },
+    {
+        "location": "Wendron",
+        "station_id": "48170",
+        "grid_ref": "SW677307",
+        "lat": 50.13,
+        "lon": -5.25
+    },
+    {
+        "location": "Penryn",
+        "station_id": "48103",
+        "grid_ref": "SW776335",
+        "lat": 50.16,
+        "lon": -5.11
+    },
+    {
+        "location": "Postbridge",
+        "station_id": "46107",
+        "grid_ref": "SX657775",
+        "lat": 50.58,
+        "lon": -3.9
+    },
+    {
+        "location": "Northam",
+        "station_id": "50194",
+        "grid_ref": "SS432273",
+        "lat": 51.02,
+        "lon": -4.24
+    },
+    {
+        "location": "Greenwich",
+        "station_id": "289102TP",
+        "grid_ref": "TQ377771",
+        "lat": 51.48,
+        "lon": -0.02
+    },
+    {
+        "location": "Olney",
+        "station_id": "E24585",
+        "grid_ref": "SP888528",
+        "lat": 52.17,
+        "lon": -0.7
+    },
+    {
+        "location": "Gillingham",
+        "station_id": "43203",
+        "grid_ref": "ST803258",
+        "lat": 51.03,
+        "lon": -2.28
+    },
+    {
+        "location": "Penzance",
+        "station_id": "48100",
+        "grid_ref": "SW450313",
+        "lat": 50.13,
+        "lon": -5.57
+    }
+]
