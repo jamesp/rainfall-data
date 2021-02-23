@@ -18,8 +18,8 @@ def get_stations(filename='stations.txt'):
     return stations
 
 def fetch_rainfall_from_file(file):
-    with open(file, 'rb'):
-        return csv.DictReader((l.decode('utf-8') for l in resp.readlines()), )
+    with open(file, 'rb') as f:
+        return csv.DictReader((l.decode('utf-8') for l in f.readlines()), )
 
 def fetch_rainfall_data(date):
     url = f"http://environment.data.gov.uk/flood-monitoring/archive/readings-{date}.csv"
@@ -42,16 +42,18 @@ def process_hourly(data):
     hourly = {}
     sortkey = lambda x: x['timestamp'].hour
     for location, points in data.items():
+        baseday = datetime.datetime.combine(points[0]['timestamp'].date(), datetime.datetime.min.time())
         points = sorted(points, key=sortkey)
         grouped = itertools.groupby(points, sortkey)
         hours = ((key, sum(point['value'] for point in group)) for key, group in grouped)
-        hours = [(today + datetime.timedelta(hours=hour), value) for hour, value in hours]
+        hours = [(baseday + datetime.timedelta(hours=hour), value) for hour, value in hours]
         hourly[location] = hours
     return hourly
 
 def save_hourly_csv(hourly):
     for location in hourly:
-        hourly_file = f'data/{location}/{year}-{month}.csv'
+        date = hourly[location][0][0].date()
+        hourly_file = f'data/{location}/{date.year}-{date.month}.csv'
         if os.path.exists(hourly_file):
             with open(hourly_file, 'r') as f:
                 r = csv.reader(f)
@@ -88,12 +90,13 @@ def save_daily_csv(daily):
 def save_daily_json(data):
     # save daily json points
     for location, points in data.items():
-        datadir = f'data/{location}/{year}'
+        date = points[0]['timestamp'].date()
+        datadir = f'data/{location}/{date.year}'
         if not os.path.isdir(datadir):
             os.makedirs(datadir)
         out = {
             'location': location,
-            'date': date,
+            'date': date.isoformat(),
             'data': [{'timestamp': p['timestamp'].isoformat(), 'value': p['value']} for p in sorted(points, key=lambda x: x['timestamp'])]
         }
         with open(f'{datadir}/{date}.json', 'w') as f:
