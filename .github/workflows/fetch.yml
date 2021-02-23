@@ -26,7 +26,7 @@ jobs:
       - name: Fetch data from 2 days ago
         run: |
           export DATE=`date --date="2 days ago" +%Y-%m-%d`
-          python3 src/rainfall.py -s src/stations.txt -d $DATE
+          python3 src/rainfall.py -s stations.txt -d $DATE
 
       # Runs a set of commands using the runners shell
       - name: Commit new data
