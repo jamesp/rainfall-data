@@ -57,7 +57,7 @@ def save_hourly_csv(hourly):
         if os.path.exists(hourly_file):
             with open(hourly_file, 'r') as f:
                 r = csv.reader(f)
-                existing_data = dict(list(r))
+                existing_data = dict(list(r)[1:])  # skip the header
         else:
             existing_data = {}
 
@@ -66,9 +66,15 @@ def save_hourly_csv(hourly):
             existing_data[time.isoformat()] = value
 
         with open(hourly_file, 'w') as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator='\n')
             writer.writerow(['time', 'rainfall_mm'])
-            writer.writerows((d, existing_data[d]) for d in sorted(existing_data))
+            for d in sorted(existing_data):
+                val = existing_data[d]
+                try:
+                    val = float(val)
+                    writer.writerow((d, '{:.1f}'.format(val)))
+                except Exception as e:
+                    print(f'Could not parse value {val}, skipping')
 
 
 def save_daily_csv(daily):
@@ -78,16 +84,22 @@ def save_daily_csv(daily):
         if os.path.exists(daily_file):
             with open(daily_file, 'r') as f:
                 r = csv.reader(f)
-                existing_data = dict(list(r))
+                existing_data = dict(list(r)[1:])
         else:
             existing_data = {}
         d, v = daily[location]
         existing_data[d] = v
 
         with open(daily_file, 'w') as f:
-            writer = csv.writer(f)
+            writer = csv.writer(f, lineterminator='\n')
             writer.writerow(['time', 'rainfall_mm'])
-            writer.writerows((d, existing_data[d]) for d in sorted(existing_data))
+            for d in sorted(existing_data):
+                val = existing_data[d]
+                try:
+                    val = float(val)
+                    writer.writerow((d, '{:.1f}'.format(val)))
+                except Exception as e:
+                    print(f'Could not parse value {val}, skipping')
 
 def save_daily_json(data):
     # save daily json points
