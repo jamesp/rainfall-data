@@ -1,0 +1,26 @@
+# Changelog
+
+
+### 2021-05-14: Added headers to all csv files
+
+>>> import glob
+>>> files = glob.glob('data/*/*.csv')
+>>> for f in files:
+...   with open(f, 'r') as i:
+...     curr = i.readlines()
+...   with open(f, 'w') as o:
+...     o.write('time,rainfall_mm\n')
+...     o.writelines(curr)
+
+
+### 2021-05-14: Rewrote all files to 0-pad dates
+
+>>> import shutil
+>>> import glob
+>>> glob.glob('data/*/*-[0-9].csv')
+>>> newfiles = [f[:-5]+'0'+f[-5:] for f in files]
+>>> for i, o in zip(files, newfiles):
+...     print(f'{i} => {o}')
+>>> for i, o in zip(files, newfiles):
+...     shutil.move(i, o)
+...
