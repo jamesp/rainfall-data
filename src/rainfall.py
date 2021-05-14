@@ -60,7 +60,7 @@ def save_hourly_csv(hourly):
                 existing_data = dict(list(r))
         else:
             existing_data = {}
-        
+
         points = hourly[location]
         for time, value in points:
             existing_data[time.isoformat()] = value
@@ -74,7 +74,7 @@ def save_daily_csv(daily):
     # group by day
     for location in daily:
         daily_file = f'data/{location}/daily.csv'
-        if os.path.exists(daily_file): 
+        if os.path.exists(daily_file):
             with open(daily_file, 'r') as f:
                 r = csv.reader(f)
                 existing_data = dict(list(r))
@@ -85,6 +85,7 @@ def save_daily_csv(daily):
 
         with open(daily_file, 'w') as f:
             writer = csv.writer(f)
+            writer.writerow(['time', 'rainfall_mm'])
             writer.writerows((d, existing_data[d]) for d in sorted(existing_data))
 
 def save_daily_json(data):
