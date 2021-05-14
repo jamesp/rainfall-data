@@ -53,7 +53,7 @@ def process_hourly(data):
 def save_hourly_csv(hourly):
     for location in hourly:
         date = hourly[location][0][0].date()
-        hourly_file = f'data/{location}/{date.year}-{date.month}.csv'
+        hourly_file = f'data/{location}/{date:%Y-%m}.csv'
         if os.path.exists(hourly_file):
             with open(hourly_file, 'r') as f:
                 r = csv.reader(f)
@@ -67,6 +67,7 @@ def save_hourly_csv(hourly):
 
         with open(hourly_file, 'w') as f:
             writer = csv.writer(f)
+            writer.writerow(['time', 'rainfall_mm'])
             writer.writerows((d, existing_data[d]) for d in sorted(existing_data))
 
 
