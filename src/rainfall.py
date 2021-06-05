@@ -42,6 +42,9 @@ def process_hourly(data):
     hourly = {}
     sortkey = lambda x: x['timestamp'].hour
     for location, points in data.items():
+        if len(points) == 0:
+            print(f"ERROR: No data reported for location {location}")
+            continue
         baseday = datetime.datetime.combine(points[0]['timestamp'].date(), datetime.datetime.min.time())
         points = sorted(points, key=sortkey)
         grouped = itertools.groupby(points, sortkey)
@@ -104,6 +107,9 @@ def save_daily_csv(daily):
 def save_daily_json(data):
     # save daily json points
     for location, points in data.items():
+        if len(points) == 0:
+            print(f"ERROR: No data reported for location {location}")
+            continue
         date = points[0]['timestamp'].date()
         datadir = f'data/{location}/{date.year}'
         if not os.path.isdir(datadir):
