@@ -37,8 +37,13 @@ jobs:
           # userid from https://api.github.com/users/jamesp
           git config --global user.email '22805+github-actions[bot]@users.noreply.github.com'
           git add data
-          git commit -m "Data added for ${DATE}"
-          git push
+          if [ -z "$(git status --porcelain)" ]; then 
+            # Working directory clean
+            echo "Nothing to commit"
+          else 
+            git commit -m "Data added for ${DATE}"
+            git push
+          fi
           
       - name: Push to tinybird
         run: |
