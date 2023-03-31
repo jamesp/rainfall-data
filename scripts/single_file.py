@@ -17,11 +17,12 @@ with open("output.csv", "w") as fh:
     writer.writerow(header)
     for site in data_dir.iterdir():
         loc = site.name
-        f = site/"daily.csv"
-        with open(site/"daily.csv") as inp:
-            reader = csv.reader(inp)
-            header = reader.__next__()
-            writer.writerows((*r, loc) for r in reader)
+        for file in site.iterdir():
+            if file.suffix == '.csv' and file.name.startswith('20'):
+                with open(site/"daily.csv") as inp:
+                    reader = csv.reader(inp)
+                    header = reader.__next__()
+                    writer.writerows((*r, loc) for r in reader)
         
 
     
