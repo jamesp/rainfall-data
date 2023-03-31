@@ -39,3 +39,11 @@ jobs:
           git add data
           git commit -m "Data added for ${DATE}"
           git push
+          
+      - name: Push to tinybird
+        run: |
+          python3 scripts/single_file.py output.csv
+          curl \
+            -H 'Authorization: Bearer ${{ secrets.TINYBIRD_KEY }}' \
+            -X POST 'https://api.tinybird.co/v0/datasources?format=csv&name=daily_rainfall&mode=replace' \
+            -F "csv=@output.csv"
