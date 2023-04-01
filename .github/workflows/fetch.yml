@@ -50,5 +50,5 @@ jobs:
           python3 scripts/single_file.py output.csv
           curl \
             -H 'Authorization: Bearer ${{ secrets.TINYBIRD_KEY }}' \
-            -X POST 'https://api.tinybird.co/v0/datasources?format=csv&name=daily_rainfall&mode=replace' \
+            -X POST 'https://api.tinybird.co/v0/datasources?format=csv&name=hourly_rainfall&mode=replace' \
             -F "csv=@output.csv"
