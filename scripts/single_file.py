@@ -19,10 +19,11 @@ with open("output.csv", "w") as fh:
         loc = site.name
         for file in site.iterdir():
             if file.suffix == '.csv' and file.name.startswith('20'):
-                with open(site/"daily.csv") as inp:
+                with open(file) as inp:
                     reader = csv.reader(inp)
                     header = reader.__next__()
-                    writer.writerows((*r, loc) for r in reader)
+                    rows = ((t.replace('T', ' '), r) for (t, r) in reader)
+                    writer.writerows((*r, loc) for r in rows)
         
 
     
